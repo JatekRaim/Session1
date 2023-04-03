@@ -109,4 +109,16 @@ def api_employees(request):
         return JsonResponse(targets, safe=False)
     else:
         return HttpResponse(status=404)
+
+
+@csrf_exempt
+def api_order_details(request):
+    if request.method == 'POST':
+        id_max_order = request.POST.get('id_max_order')
+        id_max_visitor = request.POST.get('id_max_visitor')
+        with connection.cursor() as cursor:
+            cursor.callproc('order_detail_insert', [id_max_order, id_max_visitor])
+        return HttpResponse(status=201)
+    else:
+        return HttpResponse(status=404)
 # Create your views here.

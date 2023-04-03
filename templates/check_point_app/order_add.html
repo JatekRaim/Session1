@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Создание заявки</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<form method="POST" action="">
+    {% csrf_token %}
+    <div class="container">
+        <h2>Создание заявки</h2>
+        <div class="block__row">
+            <div class="block__item">
+                <div class="block__item_header">Информация для пропуска</div>
+                <div class="block__item_body block__item_body_1">
+                    <br>Срок действия заявки:<br>
+                    с*<input type="date" name="in_date_time_begin_wish" required>
+                    по*<input type="date" name="in_date_time_end_wish" required>
+                    <br>Цель посещения*:<br>
+                    <select name="id_target">
+                        <option selected disabled>---</option>
+                        {% for target in targets %}
+                        <option value="{{ target.pk_target }}">{{ target.title_target }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="block__item">
+                <div class="block__item_header">Принимающая сторона</div>
+                <div class="block__item_body">
+                    <br>Подразделение*<br>
+                    <select name="id_sub_unit">
+                        <option selected disabled>---</option>
+                        {% for sub_unit in sub_units %}
+                        <option value="{{ sub_unit.pk_sub_unit }}">{{ sub_unit.title_sub_unit }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>ФИО*:<br>
+                    <select name="id_employee">
+                        <option selected disabled>---</option>
+                        {% for employee in employees %}
+                        <option value="{{ employee.pk_employee }}">{{ employee.lastname_emp }} {{ employee.firstname_emp }} {{ employee.middlename_emp }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="block__row">
+            <div class="block__item">
+                <div class="block__item_header">Информация о посетителе</div>
+                <div class="block__item_body block__item_body_1">
+                    <table>
+                        <tr>
+                            <td>
+                                Фамилия*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_lastname_visitor">
+                            </td>
+                            <td>
+                                Организация*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_organization">
+                            </td>
+                            <td rowspan="4">
+                               <input type="image">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Имя*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_firstname_visitor">
+                            </td>
+                            <td>
+                                Примечание*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_notice">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Отчество:
+                            </td>
+                            <td>
+                                <input type="text" name="in_middlename_visitor">
+                            </td>
+                            <td>
+                                Дата рождения*:
+                            </td>
+                            <td>
+                                <input type="date" required name="in_date_of_birthday">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Телефон*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_telephone_number">
+                            </td>
+                            <td>
+                                Серия*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_passport_series">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                E-mail*:
+                            </td>
+                            <td>
+                                <input type="email" required name="in_email_visitor">
+                            </td>
+                            <td>
+                                Номер*:
+                            </td>
+                            <td>
+                                <input type="text" required name="in_passport_number">
+                            </td>
+                            <td>
+                                <input type="file" required name="">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="block__row">
+            <div class="block__item">
+                <div class="block__item_header">Прикрепляемые документы</div>
+                <div class="block__item_body">
+                    <input type="file">
+                </div>
+            </div>
+            <div class="block__item">
+                <div class="block__item_body">
+                    <button name="">Очистить форму</button>
+                    <button name="order_insert">Оформить заявку</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

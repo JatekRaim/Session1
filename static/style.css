@@ -1,0 +1,33 @@
+h2 {
+    text-align: center;
+}
+
+button {
+    border-radius: 10px;
+}
+
+.block__item_header {
+    background-color: orange;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10px;
+}
+
+.block__row {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.block__item {
+    flex: 1 1 auto;
+    margin: 10px;
+}
+
+.block__item_body {
+}
+
+.block__item_body_1 {
+    text-align: center;
+}
