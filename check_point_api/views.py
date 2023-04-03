@@ -46,30 +46,39 @@ def api_visitors(request):
 
 
 @csrf_exempt
-def api_orders(request):
-    if request.method == 'POST':
-        in_date_time_begin_wish = request.POST.get('in_date_time_begin_wish')
-        in_date_time_end_wish = request.POST.get('in_date_time_end_wish')
-        in_count_visitors = request.POST.get('in_count_visitors', 1)
-        id_type_order = request.POST.get('id_type_order', 2)
-        id_target = request.POST.get('id_target')
-        id_status = request.POST.get('id_status', 2)
-        id_sub_unit = request.POST.get('id_sub_unit')
-        id_employee = request.POST.get('id_employee')
+def api_orders(request, id_user=None):
+    if not id_user:
+        if request.method == 'POST':
+            in_date_time_begin_wish = request.POST.get('in_date_time_begin_wish')
+            in_date_time_end_wish = request.POST.get('in_date_time_end_wish')
+            in_count_visitors = request.POST.get('in_count_visitors', 1)
+            id_type_order = request.POST.get('id_type_order', 2)
+            id_target = request.POST.get('id_target')
+            id_status = request.POST.get('id_status', 2)
+            id_sub_unit = request.POST.get('id_sub_unit')
+            id_employee = request.POST.get('id_employee')
 
-        with connection.cursor() as cursor:
-            cursor.callproc('order_insert', [in_date_time_begin_wish,
-                                            in_date_time_end_wish,
-                                            in_count_visitors,
-                                            id_type_order,
-                                            id_target,
-                                            id_status,
-                                            id_sub_unit,
-                                            id_employee])
-            max_order = dictfetchall(cursor)
-        return JsonResponse(max_order, safe=False)
+            with connection.cursor() as cursor:
+                cursor.callproc('order_insert', [in_date_time_begin_wish,
+                                                in_date_time_end_wish,
+                                                in_count_visitors,
+                                                id_type_order,
+                                                id_target,
+                                                id_status,
+                                                id_sub_unit,
+                                                id_employee])
+                max_order = dictfetchall(cursor)
+            return JsonResponse(max_order, safe=False)
+        else:
+            return HttpResponse(status=404)
     else:
-        return HttpResponse(status=404)
+        if request.method == 'GET':
+            with connection.cursor() as cursor:
+                cursor.callproc('order_select_by_user', [id_user])
+                orders = dictfetchall(cursor)
+            return JsonResponse(orders, safe=False)
+        else:
+            return HttpResponse(status=404)
 
 
 def api_sub_units(request):
