@@ -1,3 +1,5 @@
+import datetime
+
 import requests
 from django.shortcuts import render
 from django.urls import reverse
@@ -20,6 +22,15 @@ def order_add(request):
             'id_max_order': max_order['max_order']
         }
         requests.post(URL, data=data)
+
+    min_day_wish = datetime.date.today()
+    min_day_wish = min_day_wish + datetime.timedelta(days=1)
+    max_day_wish = min_day_wish + datetime.timedelta(days=15)
+    context['min_day_wish'] = min_day_wish.__str__()
+    context['max_day_wish'] = max_day_wish.__str__()
+
+    min_year = datetime.date.today() - datetime.timedelta(days=5840)
+    context['min_year'] = min_year.__str__()
 
     URL = request.build_absolute_uri(reverse('api_sub_units'))
     response_sub_units = requests.get(URL)

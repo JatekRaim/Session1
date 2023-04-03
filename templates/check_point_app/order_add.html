@@ -7,7 +7,7 @@
     <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="container">
         <h2>Создание заявки</h2>
@@ -16,8 +16,8 @@
                 <div class="block__item_header">Информация для пропуска</div>
                 <div class="block__item_body block__item_body_1">
                     <br>Срок действия заявки:<br>
-                    с*<input type="date" name="in_date_time_begin_wish" required>
-                    по*<input type="date" name="in_date_time_end_wish" required>
+                    с*<input type="date" min="{{ min_day_wish }}" max="{{ max_day_wish }}" name="in_date_time_begin_wish" id="in_date_time_begin_wish" required>
+                    по*<input type="date" name="in_date_time_end_wish" id="in_date_time_end_wish" required>
                     <br>Цель посещения*:<br>
                     <select name="id_target">
                         <option selected disabled>---</option>
@@ -94,7 +94,7 @@
                                 Дата рождения*:
                             </td>
                             <td>
-                                <input type="date" required name="in_date_of_birthday">
+                                <input type="date" max="{{ min_year }}" required name="in_date_of_birthday">
                             </td>
                         </tr>
                         <tr>
@@ -148,5 +148,6 @@
         </div>
     </div>
 </form>
+    <script src="{% static 'date.js' %}"></script>
 </body>
 </html>
