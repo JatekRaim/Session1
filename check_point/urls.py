@@ -15,7 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from check_point_api import views as api_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('api_visitors', api_views.api_visitors, name='api_visitor'),
+    path('api_orders', api_views.api_orders, name='api_orders'),
+    path('api_sub_units', api_views.api_sub_units, name='api_sub_units'),
+    path('api_targets', api_views.api_targets, name='api_targets'),
+    path('api_employees', api_views.api_employees, name='api_employees')
+
 ]
